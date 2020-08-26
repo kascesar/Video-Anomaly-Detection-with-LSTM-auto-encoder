@@ -77,12 +77,16 @@ see 'ADatagen.py' file.
 I did the training in 'google collab' one epoch with 13974 batches with a shape (1, 10, 256, 256, 1) and augmentation data with strides of (1, 2, 3, 4) steeps. where the model adjusted quickly, due to the simplicity of the data.
 To show the results I will load the weights already trained, but you can do the training if you want by yourself, [in the same way that I did](https://colab.research.google.com/drive/1cCMP0YlBeK8cZUyDscCxqndkl9e8JMoc?usp=sharing).
 
-### 
 __To test our model we will use the following batch of images__
+
 ![2test](totest.png)
-__and before training the net wi have this results__
+
+__and before training the net give this results__
+
 ![BFtraining](BFtraining.png)
+
 __After trainig__
+
 ![AFtraining](AFtraining.png)
 
 __If you are a retailer, you may notice that the last 5 frames of testing and post-training results are somewhat different, but very similar.__
@@ -94,22 +98,23 @@ if you still don't see it maybe this will help you
 
 short answer, comparing the regenerated output with the input. We will see if it is an anomaly when they are not very similar, and we will say that it is normal when they are very similar. But how do we do this? simple! [L2 norm](https://mathworld.wolfram.com/L2-Norm.html) :)
 
-$$ e(x, y , t) = |I(x, y, t) - F(I(x, y , t))|_{2}$$
+<img src="https://render.githubusercontent.com/render/math?math=e(x, y , t) = |I(x, y, t) - F(I(x, y , t))|_{2}">
 
-where $e$ is L2 norm and $F(I)$ represents $I$ through the network, and $I$ represents a windows of frames.
+where e is L2 norm and F(I) represents I through the network, and I represents a windows of frames.
 so, wee can define:
 
-$$SRC(t) = \sum_{x, y, t}^{X, Y, t \space + \space win\space size} e(t, x, y)$$
-
+<img src="https://render.githubusercontent.com/render/math?math=SRC(t) = \sum_{x, y, t}^{X, Y, t \space + \space win\space size} e(t, x, y)">
 that is _Sequence Reconstruction Cost_ (SRC). Then finally we can define that __Anomaly Score__ as, 
 
-$$AS(t) = \frac{SRC(t) - min(SRC(t))}{max(SRC(t))}$$
+<img src="https://render.githubusercontent.com/render/math?math=AS(t) = \frac{SRC(t) - min(SRC(t))}{max(SRC(t))}">
+
 ### __Results__
 
 I have taken normal and abnormal video, as shown in the following figures,
 
 ![Normal sample](Normal_sample.png)
 ![Abnormal sample](Abnormal_sample.png)
+
 __and together gives us as !!!__
 
 ![Anomaly Score](AS.png)
